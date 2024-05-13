@@ -7,4 +7,4 @@ SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/${SUPER
 SUPERCRONIC_FILE=supercronic-linux-amd64
 
 # Dependencies path
-SUPERCRONIC_DIR="${DEPS_DIR}/${DEPS_IDX}/supercronic"
+SUPERCRONIC_DIR="${DEPS_DIR}/${DEPS_IDX}"

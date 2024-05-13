@@ -19,3 +19,27 @@ else
     curl -fsSLO "${SUPERCRONIC_URL}"
     mv "${SUPERCRONIC_FILE}" "${CACHE_DIR}/${SUPERCRONIC_FILE}"
 fi
+
+echo "-----> Installing Supercronic"
+cp "${CACHE_DIR}/${SUPERCRONIC_FILE}" "${SUPERCRONIC_DIR}"
+chmod +x "${SUPERCRONIC_DIR}/${SUPERCRONIC_FILE}"
+cp "${BUILDPACK_DIR}/supercronic.sh" "${SUPERCRONIC_DIR}"
+chmod +x "${SUPERCRONIC_DIR}/supercronic.sh"
+
+LAUNCH_CONTENTS='---
+processes:
+- type: "sidecar_process"
+  command: "echo about to run sidecar script... && ${SUPERCRONIC_SCRIPT}"
+  platforms:
+    cloudfoundry:
+      sidecar_for: [ "web"]
+'
+echo "${LAUNCH_CONTENTS}" > "${SUPERCRONIC_DIR}/launch.yml"
+
+mkdir -p "${BUILD_DIR}/.profile.d"
+FILE_TO_SOURCE_BY_APP="${BUILD_DIR}/.profile.d/source_me.sh"
+
+echo "export SUPERCRONIC_SCRIPT=/home/vcap/deps/${DEPS_IDX}/supercronic.sh" >> "${FILE_TO_SOURCE_BY_APP}"
+echo "export SUPERCRONIC_DIR=/home/vcap/deps/${DEPS_IDX}" >> "${FILE_TO_SOURCE_BY_APP}"
+echo "export SUPERCRONIC_FILE=${SUPERCRONIC_FILE}" >> "${FILE_TO_SOURCE_BY_APP}"
+echo "export CRONTAB_FILE=/home/vcap/app/crontab" >> "${FILE_TO_SOURCE_BY_APP}"
