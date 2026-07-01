@@ -2,7 +2,7 @@
 
 # supercronic setup
 # Latest releases available at https://github.com/aptible/supercronic/releases
-SUPERCRONIC_VERSION="v0.2.29"
+SUPERCRONIC_VERSION="v0.2.46"
 SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-amd64
 SUPERCRONIC_FILE=supercronic-linux-amd64
 
